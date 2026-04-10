@@ -1,0 +1,29 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('promotions', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->string('discount_type', 16);
+            $table->decimal('discount_value', 12, 2);
+            $table->timestamp('starts_at');
+            $table->timestamp('ends_at');
+            $table->boolean('is_active')->default(true);
+            $table->string('banner_image_path')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('promotions');
+    }
+};
