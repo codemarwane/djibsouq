@@ -29,7 +29,7 @@ class _ProfileWebState extends State<ProfileWeb> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            buildHeader(currentPage: 'Profil'),
+            BuildHeader(currentPage: 'Profil'),
             _buildProfileContent(),
             _buildFooter(),
           ],
@@ -919,3 +919,4 @@ class _StatItem {
     this.onTap,
   });
 }
+

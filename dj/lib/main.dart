@@ -20,3 +20,15 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+    // Commandes pour exécuter l'application Flutter sur différentes plateformes :
+    // Pour exécuter sur un appareil Android ou un émulateur :
+// flutter run -d web-server --web-hostname 0.0.0.0 --web-port 8080
+
+    // Pour exécuter sur un appareil iOS ou un simulateur :
+// flutter run -d web-server --web-hostname 0.0.0.0 --web-port 8080
+
+    // Pour exécuter sur le web :  
+// flutter run -d web-server --web-hostname 0.0.0.0 --web-port 8080
+
+    // Pour exécuter sur le bureau (Windows, macOS, Linux) :
+// flutter run -d web-server --web-hostname 0.0.0.0 --web-port 8080 

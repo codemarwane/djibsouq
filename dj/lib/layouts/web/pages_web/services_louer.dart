@@ -19,7 +19,7 @@ class ServicesPage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              buildHeader(currentPage: 'Services'),
+              BuildHeader(currentPage: 'Services'),
 
               // ==================== HERO SECTION ====================
               _ServicesHero(),

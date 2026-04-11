@@ -1,10 +1,10 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:dj/widgets/web_header.dart'; // Assure-toi que c'est bien BuildHeader ou ton nom actuel
 import 'package:dj/data/product_repository.dart';
 import 'package:dj/models/product_models.dart';
 import 'package:dj/layouts/web/pages_web/detail_product_popup.dart';
 import 'package:dj/widgets/featured_product_card.dart';
-import 'package:dj/services/responsive_service.dart'; // â† Important
+import 'package:dj/services/responsive_service.dart'; // ← Important
 
 const Color primaryBlue = Color(0xFF1E3A8A);
 const Color lightGrey = Color(0xFFF3F4F6);
@@ -38,9 +38,9 @@ class _PromoWebState extends State<PromoWeb> {
         ...ProductRepository.categories.map((c) => c.name),
       ];
 
-  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ─────────────────────────────────────────────
   //  BUILD PRINCIPAL
-  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ─────────────────────────────────────────────
   @override
   Widget build(BuildContext context) {
     final deviceType = ResponsiveService.getDeviceType(context);
@@ -55,7 +55,7 @@ class _PromoWebState extends State<PromoWeb> {
       backgroundColor: lightGrey,
       body: Column(
         children: [
-          buildHeader(currentPage: 'Promo'), // ou BuildHeader si c'est le nom de la classe
+          BuildHeader(currentPage: 'Promo'), // ou BuildHeader si c'est le nom de la classe
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
@@ -85,9 +85,9 @@ class _PromoWebState extends State<PromoWeb> {
     );
   }
 
-  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ─────────────────────────────────────────────
   //  HERO BANNER RESPONSIVE
-  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ─────────────────────────────────────────────
   Widget _buildHeroBanner(bool isMobile, bool isTablet) {
     final heroHeight = isMobile ? 220.0 : isTablet ? 260.0 : 280.0;
     final titleFontSize = isMobile ? 28.0 : isTablet ? 32.0 : 36.0;
@@ -113,7 +113,7 @@ class _PromoWebState extends State<PromoWeb> {
       ),
       child: Stack(
         children: [
-          // Cercles dÃ©coratifs (rÃ©duits sur mobile)
+          // Cercles décoratifs (réduits sur mobile)
           if (!isMobile) ...[
             Positioned(right: -40, top: -40, child: _decorativeCircle(240)),
             Positioned(right: 80, bottom: -60, child: _decorativeCircle(180)),
@@ -140,13 +140,13 @@ class _PromoWebState extends State<PromoWeb> {
                           border: Border.all(color: Colors.white.withOpacity(0.2)),
                         ),
                         child: const Text(
-                          'ðŸŽ‰  Offre limitÃ©e',
+                          '🎉  Offre limitée',
                           style: TextStyle(color: Colors.white70, fontSize: 13),
                         ),
                       ),
                       SizedBox(height: isMobile ? 12 : 16),
                       Text(
-                        "PRÃ‰PAREZ L'AÃD",
+                        "PRÉPAREZ L'AÏD",
                         style: TextStyle(
                           fontSize: titleFontSize,
                           fontWeight: FontWeight.bold,
@@ -156,7 +156,7 @@ class _PromoWebState extends State<PromoWeb> {
                       ),
                       SizedBox(height: isMobile ? 8 : 10),
                       Text(
-                        '-20% sur les vÃªtements d\'AÃ¯d',
+                        '-20% sur les vêtements d\'Aïd',
                         style: TextStyle(
                           fontSize: subtitleFontSize,
                           color: Colors.white70,
@@ -176,7 +176,7 @@ class _PromoWebState extends State<PromoWeb> {
                           elevation: 0,
                         ),
                         child: const Text(
-                          'DÃ©couvrir',
+                          'Découvrir',
                           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                         ),
                       ),
@@ -185,7 +185,7 @@ class _PromoWebState extends State<PromoWeb> {
                 ),
               ),
 
-              // Image (masquÃ©e ou rÃ©duite sur trÃ¨s petit mobile)
+              // Image (masquée ou réduite sur très petit mobile)
               if (!isMobile)
                 Expanded(
                   flex: 3,
@@ -200,7 +200,7 @@ class _PromoWebState extends State<PromoWeb> {
                       height: heroHeight,
                       errorBuilder: (_, __, ___) => Container(
                         color: Colors.white.withOpacity(0.05),
-                        child: const Center(child: Text('ðŸ›ï¸', style: TextStyle(fontSize: 80))),
+                        child: const Center(child: Text('🛍️', style: TextStyle(fontSize: 80))),
                       ),
                     ),
                   ),
@@ -221,9 +221,9 @@ class _PromoWebState extends State<PromoWeb> {
         ),
       );
 
-  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ─────────────────────────────────────────────
   //  SECTION HEADER
-  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ─────────────────────────────────────────────
   Widget _buildSectionHeader(bool isMobile) {
     return Column(
       children: [
@@ -244,9 +244,9 @@ class _PromoWebState extends State<PromoWeb> {
     );
   }
 
-  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ─────────────────────────────────────────────
   //  CATEGORY FILTERS
-  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ─────────────────────────────────────────────
   Widget _buildCategoryFilters(bool isMobile) {
     return Wrap(
       spacing: isMobile ? 8 : 12,
@@ -263,18 +263,18 @@ class _PromoWebState extends State<PromoWeb> {
     );
   }
 
-  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ─────────────────────────────────────────────
   //  PRODUCT DETAIL DIALOG
-  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ─────────────────────────────────────────────
   void _openProductDetail(Product product) {
     DetailProductPopup.show(context, product: product);
   }
 
-  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ─────────────────────────────────────────────
   //  GRID RESPONSIVE
-  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ─────────────────────────────────────────────
   Widget _buildGrid(bool isMobile, bool isTablet) {
-    int crossAxisCount = 4; // desktop par dÃ©faut
+    int crossAxisCount = 4; // desktop par défaut
     double childAspectRatio = 0.72;
 
     if (isMobile) {
@@ -303,7 +303,7 @@ class _PromoWebState extends State<PromoWeb> {
     );
   }
 
-  // Empty State (inchangÃ© mais avec padding adaptÃ©)
+  // Empty State (inchangé mais avec padding adapté)
   Widget _buildEmptyState() {
     return SizedBox(
       height: 300,
@@ -329,9 +329,9 @@ class _PromoWebState extends State<PromoWeb> {
   }
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-//  FILTER CHIP â€” hover animÃ©
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─────────────────────────────────────────────
+//  FILTER CHIP — hover animé
+// ─────────────────────────────────────────────
 class _FilterChip extends StatefulWidget {
   final String label;
   final bool isSelected;
@@ -387,7 +387,8 @@ class _FilterChipState extends State<_FilterChip> {
   }
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─────────────────────────────────────────────
 //  PROMO CARD
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─────────────────────────────────────────────
+
 

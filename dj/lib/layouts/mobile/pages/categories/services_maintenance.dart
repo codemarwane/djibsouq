@@ -32,7 +32,7 @@ class ServicesMaintenancePage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          _buildHeader(),
+          _BuildHeader(),
           const SizedBox(height: 16),
           _buildConsultationCard(context),
           const SizedBox(height: 24),
@@ -45,7 +45,7 @@ class ServicesMaintenancePage extends StatelessWidget {
   }
 
   // 🏠 Bandeau en haut
-  Widget _buildHeader() {
+  Widget _BuildHeader() {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -203,3 +203,4 @@ class ServicesMaintenancePage extends StatelessWidget {
     );
   }
 }
+

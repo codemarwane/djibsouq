@@ -60,7 +60,7 @@ class _ContactUsWebState extends State<ContactUsWeb> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            buildHeader(currentPage: 'Contactez-nous'),
+            BuildHeader(currentPage: 'Contactez-nous'),
             _buildContactContent(),
             _buildFooter(),
           ],
@@ -464,3 +464,4 @@ class _ContactUsWebState extends State<ContactUsWeb> {
     );
   }
 }
+

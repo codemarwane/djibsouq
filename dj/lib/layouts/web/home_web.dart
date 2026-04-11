@@ -98,7 +98,7 @@ class _HomepageWebState extends State<HomepageWeb> with TickerProviderStateMixin
         controller: _scrollController,
         child: Column(
           children: [
-            buildHeader(currentPage: 'Home'),
+            BuildHeader(currentPage: 'Home'),
             HeroGalaxy(onDownloadTap: _scrollToDownload),
             FadeTransition(
               opacity: _fadeIn,

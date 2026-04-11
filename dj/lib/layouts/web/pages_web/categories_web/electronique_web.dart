@@ -43,7 +43,7 @@ class _ElectroniqueCategoryWebState extends State<ElectroniqueCategoryWeb> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            _buildHeader(context),
+            _BuildHeader(context),
             _buildProductsSection(),
             _buildFooter(),
           ],
@@ -53,7 +53,7 @@ class _ElectroniqueCategoryWebState extends State<ElectroniqueCategoryWeb> {
   }
 
   // ================= HEADER =================
-  Widget _buildHeader(BuildContext context) {
+  Widget _BuildHeader(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 20),
       color: Colors.white,
@@ -363,3 +363,4 @@ class _NavItem extends StatelessWidget {
     );
   }
 }
+

@@ -25,8 +25,8 @@ class FadeSlideRoute extends PageRouteBuilder {
       : super(
           transitionDuration: const Duration(milliseconds: 400),
           reverseTransitionDuration: const Duration(milliseconds: 300),
-          pageBuilder: (_, __, ___) => page,
-          transitionsBuilder: (_, animation, __, child) {
+          pageBuilder: (context, animation, secondaryAnimation) => page,
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
             // Slide léger : vient de la gauche (-6% de la largeur)
             final slide = Tween<Offset>(
               begin: const Offset(-0.06, 0),
@@ -58,16 +58,16 @@ void navigateTo(BuildContext context, Widget page, {bool replace = false}) {
 // ─────────────────────────────────────────────
 //  HEADER
 // ─────────────────────────────────────────────
-class buildHeader extends StatefulWidget {
+class BuildHeader extends StatefulWidget {
   final String currentPage;
 
-  const buildHeader({super.key, required this.currentPage});
+  const BuildHeader({super.key, required this.currentPage});
 
   @override
-  State<buildHeader> createState() => _buildHeaderState();
+  State<BuildHeader> createState() => _BuildHeaderState();
 }
 
-class _buildHeaderState extends State<buildHeader> {
+class _BuildHeaderState extends State<BuildHeader> {
   late String selectedItem;
 
   @override

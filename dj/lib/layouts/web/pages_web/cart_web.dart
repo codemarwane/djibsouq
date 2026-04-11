@@ -24,7 +24,7 @@ class _CartWebState extends State<CartWeb> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            buildHeader(currentPage: 'Cart'),
+            BuildHeader(currentPage: 'Cart'),
             _buildCartContent(),
             _buildFooter(),
           ],
@@ -225,3 +225,4 @@ class _CartWebState extends State<CartWeb> {
     );
   }
 }
+

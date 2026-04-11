@@ -30,7 +30,7 @@ class _AboutUsWebState extends State<AboutUsWeb> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            buildHeader(currentPage: 'À propos'),
+            BuildHeader(currentPage: 'À propos'),
             _buildAboutContent(),
             _buildFooter(),
           ],
@@ -653,3 +653,4 @@ class _AboutUsWebState extends State<AboutUsWeb> {
     );
   }
 }
+

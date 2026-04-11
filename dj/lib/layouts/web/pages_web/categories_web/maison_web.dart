@@ -42,7 +42,7 @@ class _MaisonCategoryWebState extends State<MaisonCategoryWeb> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            _buildHeader(context),
+            _BuildHeader(context),
             _buildProductsSection(),
             _buildFooter(),
           ],
@@ -52,7 +52,7 @@ class _MaisonCategoryWebState extends State<MaisonCategoryWeb> {
   }
 
   // ================= HEADER =================
-  Widget _buildHeader(BuildContext context) {
+  Widget _BuildHeader(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 20),
       color: Colors.white,
@@ -362,3 +362,4 @@ class _NavItem extends StatelessWidget {
     );
   }
 }
+

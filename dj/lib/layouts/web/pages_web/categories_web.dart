@@ -40,7 +40,7 @@ class CategoriesWeb extends StatelessWidget {
       backgroundColor: lightBlueBg,
       body: Column(
         children: [
-          buildHeader(currentPage: "Categories"),
+          BuildHeader(currentPage: "Categories"),
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
@@ -522,3 +522,4 @@ class CategoriesWeb extends StatelessWidget {
     );
   }
 }
+

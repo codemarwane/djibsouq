@@ -26,7 +26,7 @@ class _FavoritesWebState extends State<FavoritesWeb> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            buildHeader(currentPage: "Favorites"),
+            BuildHeader(currentPage: "Favorites"),
             _buildFavoritesContent(),
             _buildFooter(),
           ],
@@ -225,3 +225,4 @@ class _FavoritesWebState extends State<FavoritesWeb> {
     );
   }
 }
+
