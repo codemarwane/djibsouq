@@ -11,6 +11,8 @@ import 'package:dj/layouts/web/pages_web/products_web.dart';
 import 'package:dj/layouts/web/pages_web/profile_web.dart';
 import 'package:dj/services/responsive_service.dart';
 import 'package:dj/auth_page.dart';
+import 'package:dj/layouts/web/pages_web/Admin_web/admin_dashboard.dart';
+
 
 const Color primaryBlue = Color(0xFF1E3A8A);
 const Color textDark = Color(0xFF111827);
@@ -96,6 +98,10 @@ class _BuildHeaderState extends State<BuildHeader> {
         break;
       case 'Favoris':
         navigateTo(context, const FavoritesWeb());
+      break;
+      case 'admin':
+      navigateTo(context, const AdminDashboard());
+      break;
     }
   }
 
@@ -277,6 +283,10 @@ class _BuildHeaderState extends State<BuildHeader> {
                         PopupMenuItem(
                           child: const Text('À propos de nous'),
                           onTap: () => navigateTo(context, const AboutUsWeb()),
+                        ),
+                        PopupMenuItem(
+                          child: const Text('Admin Dashboard'),
+                          onTap: () => navigateTo(context, const AdminDashboard()),
                         ),
                       ],
                     );

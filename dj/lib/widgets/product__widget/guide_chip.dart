@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:dj/widgets/product__widget/shared.dart';
 
+
+// cette classe représente une puce de guide pour les catégories de produits dans la page des produits. 
+//Elle affiche le nom de la catégorie, le nombre de produits dans cette catégorie, et change d'apparence
+// lorsqu'elle est active ou survolée. Lorsqu'on clique dessus, elle déclenche une action définie par 
+//le callback onTap.
+
 class ProductsWebGuideChip extends StatefulWidget {
   final String cat;
   final int count;

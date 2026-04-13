@@ -618,7 +618,7 @@ class _AboutUsWebState extends State<AboutUsWeb> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, AppRoutes.Contact_us);
+                  Navigator.pushNamed(context, AppRoutes.contact_us);
                 },
                 child: const Text(
                   'Nous contacter',

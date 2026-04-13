@@ -14,9 +14,8 @@ import 'package:dj/auth_page.dart';
 //  TRANSITION : Fade + Slide Gauche → Droite
 // ─────────────────────────────────────────────
 class FadeSlideRoute extends PageRouteBuilder {
-  FadeSlideRoute({required Widget page, RouteSettings? settings})
+  FadeSlideRoute({required Widget page, super.settings})
       : super(
-          settings: settings,
           transitionDuration: const Duration(milliseconds: 400),
           reverseTransitionDuration: const Duration(milliseconds: 300),
           pageBuilder: (_, __, ___) => page,
@@ -48,9 +47,8 @@ class AppRoutes {
   static const String profile    = '/profile';
   static const String promo      = '/promo';
   static const String auth       = '/auth';
-  static const String Services_louer = '/Services_louer';
-  static const String Contact_us = '/Contact_us';
-  static const String About_us = '/About_us';
+  static const String contact_us = '/contact_us';
+  static const String about_us = '/about_us';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -104,27 +102,19 @@ class AppRoutes {
           page: const AuthPage(),
         );
 
-      case Services_louer:
-        return FadeSlideRoute(
-          settings: settings,
-          page: Scaffold(
-            body: Center(
-              child: Text("Page 'Services à louer' en construction"),
-            ),
-          ),
-        );
-
-      case Contact_us:
+      case contact_us:
         return FadeSlideRoute(
           settings: settings,
           page: const ContactUsWeb(),
         );
 
-      case About_us:
+      case about_us:
         return FadeSlideRoute(
           settings: settings,
           page: const AboutUsWeb(),
         );
+      
+      
 
       default:
         return FadeSlideRoute(

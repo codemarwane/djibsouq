@@ -1,3 +1,5 @@
+import 'package:dj/layouts/web/pages_web/Admin_web/admin_models.dart';
+
 class Product {
   final int id;
   final String title;
@@ -27,3 +29,6 @@ class Product {
 
 }    
 
+ProductFormDialog({ProductModel? product, required Function(bool saved) onSave}) {
+  
+}
