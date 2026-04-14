@@ -1,7 +1,7 @@
 import 'package:dj/layouts/web/pages_web/promo_web.dart';
-import 'package:dj/layouts/web/pages_web/services_louer.dart';
 import 'package:dj/layouts/web/pages_web/contact_us.dart';
 import 'package:dj/layouts/web/pages_web/about_us.dart';
+import 'package:dj/layouts/web/pages_web/services_louer.dart';
 import 'package:flutter/material.dart';
 import 'package:dj/layouts/web/home_web.dart';
 import 'package:dj/layouts/web/pages_web/cart_web.dart';
@@ -13,7 +13,6 @@ import 'package:dj/services/responsive_service.dart';
 import 'package:dj/auth_page.dart';
 import 'package:dj/layouts/web/pages_web/Admin_web/admin_dashboard.dart';
 
-
 const Color primaryBlue = Color(0xFF1E3A8A);
 const Color textDark = Color(0xFF111827);
 
@@ -24,26 +23,29 @@ class FadeSlideRoute extends PageRouteBuilder {
   final Widget page;
 
   FadeSlideRoute({required this.page})
-      : super(
-          transitionDuration: const Duration(milliseconds: 400),
-          reverseTransitionDuration: const Duration(milliseconds: 300),
-          pageBuilder: (context, animation, secondaryAnimation) => page,
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            // Slide léger : vient de la gauche (-6% de la largeur)
-            final slide = Tween<Offset>(
-              begin: const Offset(-0.06, 0),
-              end: Offset.zero,
-            ).animate(CurvedAnimation(parent: animation, curve: Curves.easeOutCubic));
+    : super(
+        transitionDuration: const Duration(milliseconds: 400),
+        reverseTransitionDuration: const Duration(milliseconds: 300),
+        pageBuilder: (context, animation, secondaryAnimation) => page,
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          // Slide léger : vient de la gauche (-6% de la largeur)
+          final slide =
+              Tween<Offset>(
+                begin: const Offset(-0.06, 0),
+                end: Offset.zero,
+              ).animate(
+                CurvedAnimation(parent: animation, curve: Curves.easeOutCubic),
+              );
 
-            // Fade : 0 → 1
-            final fade = CurvedAnimation(parent: animation, curve: Curves.easeIn);
+          // Fade : 0 → 1
+          final fade = CurvedAnimation(parent: animation, curve: Curves.easeIn);
 
-            return FadeTransition(
-              opacity: fade,
-              child: SlideTransition(position: slide, child: child),
-            );
-          },
-        );
+          return FadeTransition(
+            opacity: fade,
+            child: SlideTransition(position: slide, child: child),
+          );
+        },
+      );
 }
 
 // ─────────────────────────────────────────────
@@ -98,10 +100,10 @@ class _BuildHeaderState extends State<BuildHeader> {
         break;
       case 'Favoris':
         navigateTo(context, const FavoritesWeb());
-      break;
+        break;
       case 'admin':
-      navigateTo(context, const AdminDashboard());
-      break;
+        navigateTo(context, const AdminDashboard());
+        break;
     }
   }
 
@@ -112,15 +114,18 @@ class _BuildHeaderState extends State<BuildHeader> {
         padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: ['Home', 'Categories', 'Products', 'Promo', 'Profil', 'Favoris']
-              .map((title) => ListTile(
-                    title: Text(title),
-                    onTap: () {
-                      Navigator.pop(context);
-                      _navigate(title);
-                    },
-                  ))
-              .toList(),
+          children:
+              ['Home', 'Categories', 'Products', 'Promo', 'Profil', 'Favoris']
+                  .map(
+                    (title) => ListTile(
+                      title: Text(title),
+                      onTap: () {
+                        Navigator.pop(context);
+                        _navigate(title);
+                      },
+                    ),
+                  )
+                  .toList(),
         ),
       ),
     );
@@ -134,7 +139,11 @@ class _BuildHeaderState extends State<BuildHeader> {
     final isTablet = deviceType == DeviceType.tablet;
 
     // Tailles responsives
-    final horizontalPadding = isMobile ? 16.0 : isTablet ? 32.0 : 60.0;
+    final horizontalPadding = isMobile
+        ? 16.0
+        : isTablet
+        ? 32.0
+        : 60.0;
     final verticalPadding = isMobile ? 12.0 : 18.0;
     final logoSize = isMobile ? 32.0 : 40.0;
     final logoFontSize = isMobile ? 16.0 : 18.0;
@@ -163,11 +172,16 @@ class _BuildHeaderState extends State<BuildHeader> {
             child: MouseRegion(
               cursor: SystemMouseCursors.click,
               child: GestureDetector(
-                onTap: () => navigateTo(context, const HomepageWeb(), replace: true),
+                onTap: () =>
+                    navigateTo(context, const HomepageWeb(), replace: true),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Image.asset('assets/images/logo.png', width: logoSize, height: logoSize),
+                    Image.asset(
+                      'assets/images/logo.png',
+                      width: logoSize,
+                      height: logoSize,
+                    ),
                     SizedBox(width: isMobile ? 6 : 8),
                     Flexible(
                       child: Text(
@@ -192,12 +206,14 @@ class _BuildHeaderState extends State<BuildHeader> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: navItems
-                    .map((title) => NavItemWeb(
-                          title: title,
-                          isSelected: selectedItem == title,
-                          onTap: () => _navigate(title),
-                          deviceType: deviceType,
-                        ))
+                    .map(
+                      (title) => NavItemWeb(
+                        title: title,
+                        isSelected: selectedItem == title,
+                        onTap: () => _navigate(title),
+                        deviceType: deviceType,
+                      ),
+                    )
                     .toList(),
               ),
             ),
@@ -234,7 +250,9 @@ class _BuildHeaderState extends State<BuildHeader> {
                   onTap: () => navigateTo(context, const AuthPage()),
                   deviceType: deviceType,
                 ),
-                if (!isMobile || selectedItem == 'Profil') // Masquer sur mobile sauf si actif
+                if (!isMobile ||
+                    selectedItem ==
+                        'Profil') // Masquer sur mobile sauf si actif
                   _HeaderIcon(
                     icon: Icons.person_outline,
                     activeIcon: Icons.person,
@@ -243,7 +261,9 @@ class _BuildHeaderState extends State<BuildHeader> {
                     onTap: () => navigateTo(context, const ProfileWeb()),
                     deviceType: deviceType,
                   ),
-                if (!isMobile || selectedItem == 'Favoris') // Masquer sur mobile sauf si actif
+                if (!isMobile ||
+                    selectedItem ==
+                        'Favoris') // Masquer sur mobile sauf si actif
                   _HeaderIcon(
                     icon: Icons.favorite_border,
                     activeIcon: Icons.favorite,
@@ -262,23 +282,29 @@ class _BuildHeaderState extends State<BuildHeader> {
                   deviceType: deviceType,
                 ),
                 _HeaderIcon(
-                  icon: Icons.more_vert, 
-                  activeIcon: Icons.more_vert, 
-                  isActive: false, 
-                  tooltip: 'Plus', 
+                  icon: Icons.more_vert,
+                  activeIcon: Icons.more_vert,
+                  isActive: false,
+                  tooltip: 'Plus',
                   onTap: () {
                     // Afficher un menu contextuel avec les options supplémentaires
                     showMenu(
                       context: context,
-                      position: const RelativeRect.fromLTRB(1000, 80, 16, 0), // Positionner en haut à droite
+                      position: const RelativeRect.fromLTRB(
+                        1000,
+                        80,
+                        16,
+                        0,
+                      ), // Positionner en haut à droite
                       items: [
                         PopupMenuItem(
-                          child: const Text('Services'),
+                          child: const Text('Service'),
                           onTap: () => navigateTo(context, const ServicesPage()),
                         ),
                         PopupMenuItem(
                           child: const Text('Contactez-nous'),
-                          onTap: () => navigateTo(context, const ContactUsWeb()),
+                          onTap: () =>
+                              navigateTo(context, const ContactUsWeb()),
                         ),
                         PopupMenuItem(
                           child: const Text('À propos de nous'),
@@ -286,13 +312,14 @@ class _BuildHeaderState extends State<BuildHeader> {
                         ),
                         PopupMenuItem(
                           child: const Text('Admin Dashboard'),
-                          onTap: () => navigateTo(context, const AdminDashboard()),
+                          onTap: () =>
+                              navigateTo(context, const AdminDashboard()),
                         ),
                       ],
                     );
-                  }, 
-                  deviceType: deviceType
-                )
+                  },
+                  deviceType: deviceType,
+                ),
               ],
             ),
           ),
@@ -328,7 +355,8 @@ class _HeaderIcon extends StatefulWidget {
   State<_HeaderIcon> createState() => _HeaderIconState();
 }
 
-class _HeaderIconState extends State<_HeaderIcon> with SingleTickerProviderStateMixin {
+class _HeaderIconState extends State<_HeaderIcon>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scale;
   bool _hovered = false;
@@ -336,10 +364,14 @@ class _HeaderIconState extends State<_HeaderIcon> with SingleTickerProviderState
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 200));
-    _scale = Tween<double>(begin: 1.0, end: 1.25).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOutBack),
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
     );
+    _scale = Tween<double>(
+      begin: 1.0,
+      end: 1.25,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutBack));
   }
 
   @override
@@ -356,8 +388,16 @@ class _HeaderIconState extends State<_HeaderIcon> with SingleTickerProviderState
 
     // Tailles responsives
     final iconSize = widget.isActive
-        ? (isMobile ? 24.0 : isTablet ? 26.0 : 26.0)
-        : (isMobile ? 20.0 : isTablet ? 22.0 : 22.0);
+        ? (isMobile
+              ? 24.0
+              : isTablet
+              ? 26.0
+              : 26.0)
+        : (isMobile
+              ? 20.0
+              : isTablet
+              ? 22.0
+              : 22.0);
     final padding = isMobile ? 8.0 : 10.0;
     final badgeSize = isMobile ? 15.0 : 17.0;
     final badgeFontSize = isMobile ? 9.0 : 10.0;
@@ -386,7 +426,9 @@ class _HeaderIconState extends State<_HeaderIcon> with SingleTickerProviderState
                   duration: const Duration(milliseconds: 200),
                   padding: EdgeInsets.all(padding),
                   decoration: BoxDecoration(
-                    color: showActive ? primaryBlue.withOpacity(0.08) : Colors.transparent,
+                    color: showActive
+                        ? primaryBlue.withOpacity(0.08)
+                        : Colors.transparent,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: AnimatedSwitcher(
@@ -406,7 +448,10 @@ class _HeaderIconState extends State<_HeaderIcon> with SingleTickerProviderState
                     child: Container(
                       width: badgeSize,
                       height: badgeSize,
-                      decoration: const BoxDecoration(color: Colors.redAccent, shape: BoxShape.circle),
+                      decoration: const BoxDecoration(
+                        color: Colors.redAccent,
+                        shape: BoxShape.circle,
+                      ),
                       child: Center(
                         child: Text(
                           '${widget.badge}',
@@ -476,8 +521,8 @@ class _NavItemWebState extends State<NavItemWeb> {
                 color: widget.isSelected
                     ? primaryBlue
                     : _hovered
-                        ? primaryBlue.withOpacity(0.6)
-                        : Colors.transparent,
+                    ? primaryBlue.withOpacity(0.6)
+                    : Colors.transparent,
                 width: 3,
               ),
             ),
@@ -489,8 +534,8 @@ class _NavItemWebState extends State<NavItemWeb> {
               color: widget.isSelected
                   ? primaryBlue
                   : _hovered
-                      ? primaryBlue.withOpacity(0.8)
-                      : textDark,
+                  ? primaryBlue.withOpacity(0.8)
+                  : textDark,
               fontSize: fontSize,
             ),
             child: Text(widget.title),
