@@ -34,6 +34,8 @@ class UserFactory extends Factory
             'avatar_path' => null,
             'locale' => 'fr',
             'role' => 'customer',
+            'is_active' => true,
+            'failed_login_attempts' => 0,
         ];
     }
 

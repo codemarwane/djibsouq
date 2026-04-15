@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Product;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +21,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Route::bind('adminProduct', function (string $value): Product {
+            return Product::query()->findOrFail($value);
+        });
     }
 }

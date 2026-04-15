@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -38,5 +39,14 @@ class Promotion extends Model
     {
         return $this->belongsToMany(Category::class, 'promotion_category')
             ->withTimestamps();
+    }
+
+    public function scopeActiveNow(Builder $query): Builder
+    {
+        $now = now();
+
+        return $query->where('is_active', true)
+            ->where('starts_at', '<=', $now)
+            ->where('ends_at', '>=', $now);
     }
 }
