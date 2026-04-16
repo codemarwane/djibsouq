@@ -1,3 +1,5 @@
+/// Grille des catégories : contenu issu de [ProductRepository] (API déjà chargée au démarrage ou ici).
+library;
 
 import 'package:flutter/material.dart';
 import 'package:dj/data/product_repository.dart';
@@ -43,49 +45,55 @@ class CategoriesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final categories = ProductRepository.categories;
-    
-    return Scaffold(
-      backgroundColor: lightGrey,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: const Text(
-          'Catégories',
-          style: TextStyle(
-            color: primaryBlue,
-            fontWeight: FontWeight.bold,
-            fontSize: 22,
+    return FutureBuilder<void>(
+      future: ProductRepository.initialize(),
+      builder: (context, snapshot) {
+        final categories = ProductRepository.categories;
+        return Scaffold(
+          backgroundColor: lightGrey,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            title: const Text(
+              'Catégories',
+              style: TextStyle(
+                color: primaryBlue,
+                fontWeight: FontWeight.bold,
+                fontSize: 22,
+              ),
+            ),
+            centerTitle: false,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back, color: primaryBlue),
+              onPressed: () => Navigator.pop(context),
+            ),
           ),
-        ),
-        centerTitle: false,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: primaryBlue),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 16,
-            childAspectRatio: 1,
-          ),
-          itemCount: categories.length,
-          itemBuilder: (context, index) {
-            final category = categories[index];
-            return _buildCategoryCard(
-              name: category.name,
-              icon: _getIcon(category.icon),
-              color: category.color,
-              imageUrl: category.image,
-              onTap: () => _openCategory(context, category.name),
-            );
-          },
-        ),
-      ),
+          body: snapshot.connectionState != ConnectionState.done
+              ? const Center(child: CircularProgressIndicator())
+              : Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 16,
+                      mainAxisSpacing: 16,
+                      childAspectRatio: 1,
+                    ),
+                    itemCount: categories.length,
+                    itemBuilder: (context, index) {
+                      final category = categories[index];
+                      return _buildCategoryCard(
+                        name: category.name,
+                        icon: _getIcon(category.icon),
+                        color: category.color,
+                        imageUrl: category.image,
+                        onTap: () => _openCategory(context, category.name),
+                      );
+                    },
+                  ),
+                ),
+        );
+      },
     );
   }
 

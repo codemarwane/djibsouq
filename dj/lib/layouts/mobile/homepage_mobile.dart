@@ -1,3 +1,6 @@
+/// Accueil mobile : attend le [ProductRepository], bannières, catégories et listes par rayon.
+library;
+
 import 'package:dj/models/category_models.dart';
 import 'package:dj/data/product_repository.dart';
 import 'package:dj/widgets/products_horizontal_list.dart';
@@ -20,12 +23,14 @@ class HomepageMobile extends StatefulWidget {
 class _HomepageMobileState extends State<HomepageMobile> {
   late ValueNotifier<int> _currentBanner;
   late PageController _pageController;
+  late Future<void> _initFuture;
 
   @override
   void initState() {
     super.initState();
     _currentBanner = ValueNotifier(0);
     _pageController = PageController(viewportFraction: 0.9);
+    _initFuture = ProductRepository.initialize();
   }
 
   @override
@@ -37,58 +42,62 @@ class _HomepageMobileState extends State<HomepageMobile> {
 
   @override
   Widget build(BuildContext context) {
-    final categories = ProductRepository.categories;
-
-    return Scaffold(
-      backgroundColor: lightGrey,
-      drawer: const AppDrawer(),
-      body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            _buildAppBar(),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _searchBar(),
-                    const SizedBox(height: 20),
-                    _bannerSection(),
-                    const SizedBox(height: 24),
-                    _sectionTitle("Categories"),
-                    const SizedBox(height: 12),
-                    _categoriesPreview(categories),
-                    const SizedBox(height: 32),
-
-                    /// PRODUITS PAR CATEGORIE (DYNAMIQUE)
-                    ...categories.map((category) {
-                      final products =
-                          ProductRepository.getProductsByCategory(
-                              category.name);
-
-                      if (products.isEmpty) return const SizedBox();
-
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ProductsHorizontalList(
-                            title: category.name,
-                            products: products,
-                            detailPageBuilder: (product) =>
-                                DetailProductPage(product: product),
-                          ),
-                          const SizedBox(height: 32),
-                        ],
-                      );
-                    }),
-                  ],
+    return FutureBuilder<void>(
+      future: _initFuture,
+      builder: (context, snapshot) {
+        final categories = ProductRepository.categories;
+        if (snapshot.connectionState != ConnectionState.done) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+        return Scaffold(
+          backgroundColor: lightGrey,
+          drawer: const AppDrawer(),
+          body: SafeArea(
+            child: CustomScrollView(
+              slivers: [
+                _buildAppBar(),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _searchBar(),
+                        const SizedBox(height: 20),
+                        _bannerSection(),
+                        const SizedBox(height: 24),
+                        _sectionTitle("Categories"),
+                        const SizedBox(height: 12),
+                        _categoriesPreview(categories),
+                        const SizedBox(height: 32),
+                        ...categories.map((category) {
+                          final products =
+                              ProductRepository.getProductsByCategory(category.name);
+                          if (products.isEmpty) return const SizedBox();
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ProductsHorizontalList(
+                                title: category.name,
+                                products: products,
+                                detailPageBuilder: (product) =>
+                                    DetailProductPage(product: product),
+                              ),
+                              const SizedBox(height: 32),
+                            ],
+                          );
+                        }),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 

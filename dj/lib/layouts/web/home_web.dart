@@ -1,3 +1,6 @@
+/// Page d’accueil web : catalogue [ProductRepository], filtres, mise en page responsive.
+library;
+
 import 'dart:async';
 import 'package:dj/layouts/web/pages_web/categories_web.dart';
 import 'package:dj/models/category_models.dart';
@@ -39,9 +42,10 @@ class HomepageWeb extends StatefulWidget {
 }
 
 class _HomepageWebState extends State<HomepageWeb> with TickerProviderStateMixin {
-  String _selectedCategory = ProductRepository.categories.first.name;
+  String _selectedCategory = 'Toutes';
   final GlobalKey _downloadKey = GlobalKey();
   final ScrollController _scrollController = ScrollController();
+  late Future<void> _initFuture;
 
   late AnimationController _fadeController;
   late Animation<double> _fadeIn;
@@ -50,6 +54,7 @@ class _HomepageWebState extends State<HomepageWeb> with TickerProviderStateMixin
   @override
   void initState() {
     super.initState();
+    _initFuture = ProductRepository.initialize();
     _fadeController = AnimationController(vsync: this, duration: const Duration(milliseconds: 700));
     _fadeIn = CurvedAnimation(parent: _fadeController, curve: Curves.easeOut);
     _slideIn = Tween<Offset>(begin: const Offset(0, 0.04), end: Offset.zero)
@@ -92,35 +97,46 @@ class _HomepageWebState extends State<HomepageWeb> with TickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: lightGrey,
-      body: SingleChildScrollView(
-        controller: _scrollController,
-        child: Column(
-          children: [
-            buildHeader(currentPage: 'Home'),
-            HeroGalaxy(onDownloadTap: _scrollToDownload),
-            FadeTransition(
-              opacity: _fadeIn,
-              child: SlideTransition(
-                position: _slideIn,
-                child: Column(
-                  children: [
-                    _buildBestSellers(),
-                    _buildPromoCarousel(),
-                    _buildCategoriesBar(),
-                    _buildFeaturedProducts(),
-                    _buildDownloadSection(),
-                    _buildWhyShop(),
-                    _buildNewsletterSection(),
-                    _buildFooter(),
-                  ],
+    return FutureBuilder<void>(
+      future: _initFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState != ConnectionState.done) {
+          return const Scaffold(body: Center(child: CircularProgressIndicator()));
+        }
+        if (_selectedCategory == 'Toutes' && ProductRepository.categories.isNotEmpty) {
+          _selectedCategory = ProductRepository.categories.first.name;
+        }
+        return Scaffold(
+          backgroundColor: lightGrey,
+          body: SingleChildScrollView(
+            controller: _scrollController,
+            child: Column(
+              children: [
+                buildHeader(currentPage: 'Home'),
+                HeroGalaxy(onDownloadTap: _scrollToDownload),
+                FadeTransition(
+                  opacity: _fadeIn,
+                  child: SlideTransition(
+                    position: _slideIn,
+                    child: Column(
+                      children: [
+                        _buildBestSellers(),
+                        _buildPromoCarousel(),
+                        _buildCategoriesBar(),
+                        _buildFeaturedProducts(),
+                        _buildDownloadSection(),
+                        _buildWhyShop(),
+                        _buildNewsletterSection(),
+                        _buildFooter(),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 

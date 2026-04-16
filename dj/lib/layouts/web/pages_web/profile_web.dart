@@ -1,6 +1,11 @@
+/// Profil connecté : chargement et mise à jour via [AuthApi] (`/user`).
+library;
+
 import 'package:flutter/material.dart';
 import 'package:dj/widgets/web_header.dart';
 import 'package:dj/routes.dart';
+import 'package:dj/data/api/auth_api.dart';
+import 'package:dj/models/user_model.dart';
 
 const Color primaryBlue = Color(0xFF1E3A8A);
 const Color lightGrey = Color(0xFFF3F4F6);
@@ -22,19 +27,41 @@ class ProfileWeb extends StatefulWidget {
 }
 
 class _ProfileWebState extends State<ProfileWeb> {
+  final _authApi = AuthApi();
+  late Future<UserModel> _userFuture;
+  UserModel? _user;
+
+  @override
+  void initState() {
+    super.initState();
+    _userFuture = _authApi.me();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: lightGrey,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            buildHeader(currentPage: 'Profil'),
-            _buildProfileContent(),
-            _buildFooter(),
-          ],
-        ),
-      ),
+    return FutureBuilder<UserModel>(
+      future: _userFuture,
+      builder: (context, snapshot) {
+        _user = snapshot.data;
+        return Scaffold(
+          backgroundColor: lightGrey,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                buildHeader(currentPage: 'Profil'),
+                if (snapshot.connectionState != ConnectionState.done)
+                  const Padding(
+                    padding: EdgeInsets.all(48),
+                    child: CircularProgressIndicator(),
+                  )
+                else
+                  _buildProfileContent(),
+                _buildFooter(),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -161,8 +188,8 @@ class _ProfileWebState extends State<ProfileWeb> {
               ? MainAxisAlignment.center
               : MainAxisAlignment.start,
           children: [
-            const Text(
-              'Marwan User',
+            Text(
+              _user?.name ?? 'Utilisateur',
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
@@ -189,7 +216,7 @@ class _ProfileWebState extends State<ProfileWeb> {
           ],
         ),
         const SizedBox(height: 8),
-        _infoRow(Icons.email_outlined, 'mymail@gmail.com', isMobile),
+        _infoRow(Icons.email_outlined, _user?.email ?? '', isMobile),
         const SizedBox(height: 6),
         _infoRow(Icons.location_on_outlined, 'Djibouti, DJ', isMobile),
         if (!isMobile) ...[
@@ -571,13 +598,13 @@ class _ProfileWebState extends State<ProfileWeb> {
                 const SizedBox(height: 24),
                 _editField(
                   label: 'Nom',
-                  hint: 'Marwan User',
+                  hint: _user?.name ?? '',
                   icon: Icons.person_outline,
                 ),
                 const SizedBox(height: 16),
                 _editField(
                   label: 'Email',
-                  hint: 'mymail@gmail.com',
+                  hint: _user?.email ?? '',
                   icon: Icons.email_outlined,
                 ),
                 const SizedBox(height: 16),

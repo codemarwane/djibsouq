@@ -1,6 +1,11 @@
+/// Favoris web : [WishlistApi] et navigation vers le catalogue.
+library;
+
 import 'package:dj/layouts/web/pages_web/products_web.dart';
 import 'package:dj/widgets/web_header.dart';
 import 'package:flutter/material.dart';
+import 'package:dj/data/api/wishlist_api.dart';
+import 'package:dj/models/product_models.dart';
 
 
 const Color primaryBlue = Color(0xFF1E3A8A);
@@ -16,8 +21,14 @@ class FavoritesWeb extends StatefulWidget {
 }
 
 class _FavoritesWebState extends State<FavoritesWeb> {
-  // Sample favorite items - in real app, this would come from state management
-  final List<Map<String, dynamic>> favorites = [];
+  final _wishlistApi = WishlistApi();
+  late Future<List<Product>> _favoritesFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _favoritesFuture = _wishlistApi.getWishlist();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +38,24 @@ class _FavoritesWebState extends State<FavoritesWeb> {
         child: Column(
           children: [
             buildHeader(currentPage: "Favorites"),
-            _buildFavoritesContent(),
+            FutureBuilder<List<Product>>(
+              future: _favoritesFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState != ConnectionState.done) {
+                  return const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 60),
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (snapshot.hasError) {
+                  return const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 60),
+                    child: Text('Erreur de chargement favoris'),
+                  );
+                }
+                return _buildFavoritesContent(snapshot.data ?? const []);
+              },
+            ),
             _buildFooter(),
           ],
         ),
@@ -36,12 +64,12 @@ class _FavoritesWebState extends State<FavoritesWeb> {
   }
 
   // ================= FAVORITES CONTENT =================
-  Widget _buildFavoritesContent() {
+  Widget _buildFavoritesContent(List<Product> favorites) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 60),
       child: favorites.isEmpty
           ? _buildEmptyFavorites()
-          : _buildFavoritesList(),
+          : _buildFavoritesList(favorites),
     );
   }
 
@@ -98,7 +126,7 @@ class _FavoritesWebState extends State<FavoritesWeb> {
     );
   }
 
-  Widget _buildFavoritesList() {
+  Widget _buildFavoritesList(List<Product> favorites) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -122,14 +150,14 @@ class _FavoritesWebState extends State<FavoritesWeb> {
             childAspectRatio: 0.8,
           ),
           itemBuilder: (context, index) {
-            return _buildFavoriteCard();
+            return _buildFavoriteCard(favorites[index]);
           },
         ),
       ],
     );
   }
 
-  Widget _buildFavoriteCard() {
+  Widget _buildFavoriteCard(Product product) {
     return Container(
       decoration: BoxDecoration(
         color: cardGrey,
@@ -169,16 +197,16 @@ class _FavoritesWebState extends State<FavoritesWeb> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "Produit",
+                Text(
+                  product.title,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
                   ),
                 ),
                 const SizedBox(height: 5),
-                const Text(
-                  "\$99.00",
+                Text(
+                  "\$${product.price.toStringAsFixed(2)}",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: primaryBlue,
