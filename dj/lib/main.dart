@@ -2,8 +2,13 @@ import 'package:dj/demarrage_screen.dart';
 import 'package:flutter/material.dart';
 import 'routes.dart';
 import 'core/theme/app_theme.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await initializeDateFormatting('fr'); // ou 'en', 'ar', etc.
+
   runApp(const MyApp());
 }
 

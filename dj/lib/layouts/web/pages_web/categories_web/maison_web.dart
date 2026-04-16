@@ -131,7 +131,7 @@ class _MaisonCategoryWebState extends State<MaisonCategoryWeb> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const CartWeb(),
+                      builder: (context) => const CommandeSuiviePage(),
                     ),
                   );
                 },

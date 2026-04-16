@@ -1,3 +1,15 @@
+/*
+
+    Features products sans détail pop_up ,
+    subscribe tendant vers l'inscription et la connexion,
+    réseaux sociaux avec un lien vers les pages officielles,
+    Scction links vers les autres pages (contact us, about us, services louer),
+
+*/
+
+
+
+
 import 'dart:async';
 import 'package:dj/layouts/web/pages_web/categories_web.dart';
 import 'package:dj/models/category_models.dart';

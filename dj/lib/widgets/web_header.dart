@@ -1,3 +1,18 @@
+/*
+
+  - Faire marcher le bouton recherche dans le header (pour l'instant il ne fait rien) :
+  - Afficher une barre de recherche en plein écran (overlay) avec un champ de 
+    saisie et un bouton de fermeture
+  - Permettre à l'utilisateur de taper sa recherche et d'afficher des résultats
+    (simulés pour l'instant, pas besoin de backend)
+  - Gérer le responsive design : sur mobile, la barre de recherche doit occuper tout l'écran, sur desktop elle peut être plus compacte
+  - Ajouter des animations d'ouverture/fermeture pour une meilleure UX
+  - Tester sur différentes tailles d'écran pour s'assurer que tout fonctionne correctement
+
+
+*/
+
+
 import 'package:dj/layouts/web/pages_web/promo_web.dart';
 import 'package:dj/layouts/web/pages_web/contact_us.dart';
 import 'package:dj/layouts/web/pages_web/about_us.dart';
@@ -278,7 +293,7 @@ class _BuildHeaderState extends State<BuildHeader> {
                   isActive: selectedItem == 'Panier',
                   tooltip: 'Panier',
                   badge: 3,
-                  onTap: () => navigateTo(context, const CartWeb()),
+                  onTap: () => navigateTo(context, const CommandeSuiviePage()),
                   deviceType: deviceType,
                 ),
                 _HeaderIcon(
@@ -304,7 +319,7 @@ class _BuildHeaderState extends State<BuildHeader> {
                         PopupMenuItem(
                           child: const Text('Contactez-nous'),
                           onTap: () =>
-                              navigateTo(context, const ContactUsWeb()),
+                              navigateTo(context, const ContactPage()),
                         ),
                         PopupMenuItem(
                           child: const Text('À propos de nous'),

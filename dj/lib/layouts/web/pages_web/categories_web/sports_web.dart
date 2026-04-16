@@ -132,7 +132,7 @@ class _SportsCategoryWebState extends State<SportsCategoryWeb> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const CartWeb(),
+                      builder: (context) => const CommandeSuiviePage(),
                     ),
                   );
                 },

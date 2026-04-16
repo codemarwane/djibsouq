@@ -132,7 +132,7 @@ class _ElectroniqueCategoryWebState extends State<ElectroniqueCategoryWeb> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const CartWeb(),
+                      builder: (context) => const CommandeSuiviePage(),
                     ),
                   );
                 },

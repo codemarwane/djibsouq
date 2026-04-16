@@ -132,7 +132,7 @@ class _VetementsCategoryWebState extends State<VetementsCategoryWeb> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const CartWeb(),
+                      builder: (context) => const CommandeSuiviePage(),
                     ),
                   );
                 },
