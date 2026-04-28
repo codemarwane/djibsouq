@@ -15,11 +15,30 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $this->call([
+            CategorySeeder::class,
+            ProductSeeder::class,
+            PromotionSeeder::class,
+        ]);
 
-        User::factory()->create([
+        User::query()->updateOrCreate(['email' => 'test@example.com'], [
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'password' => 'password123',
+            'role' => 'customer',
+            'is_active' => true,
+            'inactive_reason' => null,
+            'failed_login_attempts' => 0,
+        ]);
+
+        User::query()->updateOrCreate(['email' => 'admin@djibsouq.local'], [
+            'name' => 'Admin Djibsouq',
+            'email' => 'admin@djibsouq.local',
+            'password' => 'password123',
+            'role' => 'admin',
+            'is_active' => true,
+            'inactive_reason' => null,
+            'failed_login_attempts' => 0,
         ]);
     }
 }

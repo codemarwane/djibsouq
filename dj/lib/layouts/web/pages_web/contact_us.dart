@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dj/widgets/web_header.dart';
+import 'package:dj/data/api/contact_api.dart';
 
 const Color primaryBlue = Color(0xFF1E3A8A);
 const Color lightGrey = Color(0xFFF3F4F6);
@@ -21,6 +22,7 @@ class ContactUsWeb extends StatefulWidget {
 }
 
 class _ContactUsWebState extends State<ContactUsWeb> {
+  final ContactApi _contactApi = ContactApi();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _subjectController = TextEditingController();
@@ -36,20 +38,37 @@ class _ContactUsWebState extends State<ContactUsWeb> {
     super.dispose();
   }
 
-  void _submitForm() {
+  Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Message envoyé avec succès!'),
-          backgroundColor: Colors.green,
-          duration: Duration(seconds: 3),
-        ),
-      );
+      try {
+        await _contactApi.sendMessage(
+          name: _nameController.text.trim(),
+          email: _emailController.text.trim(),
+          subject: _subjectController.text.trim(),
+          message: _messageController.text.trim(),
+        );
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Message envoyé avec succès!'),
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 3),
+          ),
+        );
 
-      _nameController.clear();
-      _emailController.clear();
-      _subjectController.clear();
-      _messageController.clear();
+        _nameController.clear();
+        _emailController.clear();
+        _subjectController.clear();
+        _messageController.clear();
+      } catch (_) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Échec de l’envoi, réessayez.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
 

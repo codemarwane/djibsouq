@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:dj/widgets/web_header.dart'; // Assure-toi que c'est bien BuildHeader ou ton nom actuel
 import 'package:dj/data/product_repository.dart';
 import 'package:dj/models/product_models.dart';
@@ -20,10 +20,12 @@ class PromoWeb extends StatefulWidget {
 
 class _PromoWebState extends State<PromoWeb> {
   late String _selectedCategory;
+  late Future<void> _initFuture;
 
   @override
   void initState() {
     super.initState();
+    _initFuture = ProductRepository.initialize();
     _selectedCategory = widget.initialCategory ?? 'Toutes';
   }
 
@@ -43,45 +45,53 @@ class _PromoWebState extends State<PromoWeb> {
   // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   @override
   Widget build(BuildContext context) {
-    final deviceType = ResponsiveService.getDeviceType(context);
-    final isMobile = deviceType == DeviceType.mobile;
-    final isTablet = deviceType == DeviceType.tablet;
+    return FutureBuilder<void>(
+      future: _initFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState != ConnectionState.done) {
+          return const Scaffold(body: Center(child: CircularProgressIndicator()));
+        }
+        final deviceType = ResponsiveService.getDeviceType(context);
+        final isMobile = deviceType == DeviceType.mobile;
+        final isTablet = deviceType == DeviceType.tablet;
 
     // Tailles responsives
     final horizontalPadding = isMobile ? 16.0 : isTablet ? 32.0 : 60.0;
     final verticalPadding = isMobile ? 30.0 : 50.0;
 
-    return Scaffold(
-      backgroundColor: lightGrey,
-      body: Column(
-        children: [
-          buildHeader(currentPage: 'Promo'), // ou BuildHeader si c'est le nom de la classe
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: horizontalPadding,
-                  vertical: verticalPadding,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    _buildHeroBanner(isMobile, isTablet),
-                    const SizedBox(height: 50),
-                    _buildSectionHeader(isMobile),
-                    const SizedBox(height: 30),
-                    _buildCategoryFilters(isMobile),
-                    const SizedBox(height: 40),
-                    _filteredProducts.isEmpty
-                        ? _buildEmptyState()
-                        : _buildGrid(isMobile, isTablet),
-                  ],
+        return Scaffold(
+          backgroundColor: lightGrey,
+          body: Column(
+            children: [
+              buildHeader(currentPage: 'Promo'),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPadding,
+                      vertical: verticalPadding,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        _buildHeroBanner(isMobile, isTablet),
+                        const SizedBox(height: 50),
+                        _buildSectionHeader(isMobile),
+                        const SizedBox(height: 30),
+                        _buildCategoryFilters(isMobile),
+                        const SizedBox(height: 40),
+                        _filteredProducts.isEmpty
+                            ? _buildEmptyState()
+                            : _buildGrid(isMobile, isTablet),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 

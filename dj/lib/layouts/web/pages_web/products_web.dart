@@ -112,17 +112,13 @@ class _ProductsWebState extends State<ProductsWeb> {
   final _keys = <String, GlobalKey>{};
   String _q = '';
   String? _active;
+  late Future<void> _initFuture;
 
   @override
   void initState() {
     super.initState();
-    for (final p in ProductRepository.products) {
-      _keys.putIfAbsent(p.category, () => GlobalKey());
-    }
+    _initFuture = ProductRepository.initialize();
     _active = widget.initialCategory;
-    if (_active != null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) => _goto(_active!));
-    }
   }
 
   @override
@@ -174,32 +170,45 @@ class _ProductsWebState extends State<ProductsWeb> {
   // ─── BUILD ────────────────────────────────
   @override
   Widget build(BuildContext context) {
-    final desktop = _Bp.desktop(context);
-    return Scaffold(
-      backgroundColor: _bg,
-      drawer: desktop
-          ? null
-          : Drawer(
-              width: 300,
-              child: _Sidebar(
-                cats: _cats,
-                counts: _counts,
-                active: _active,
-                query: _q,
-                onSearch: (v) => setState(() => _q = v),
-                onTap: (cat) => _gotoClose(cat, context),
-                isDrawer: true,
-              ),
-            ),
-      body: Builder(
-        builder: (scaffoldCtx) => Column(
-          children: [
-            // Header
-            desktop
-                ? buildHeader(currentPage: 'Products')
-                : _MobileBar(
-                    onMenu: () => Scaffold.of(scaffoldCtx).openDrawer(),
+    return FutureBuilder<void>(
+      future: _initFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState != ConnectionState.done) {
+          return const Scaffold(body: Center(child: CircularProgressIndicator()));
+        }
+        _keys.clear();
+        for (final p in ProductRepository.products) {
+          _keys.putIfAbsent(p.category, () => GlobalKey());
+        }
+        if (_active != null && _keys.containsKey(_active)) {
+          WidgetsBinding.instance.addPostFrameCallback((_) => _goto(_active!));
+          _active = null;
+        }
+        final desktop = _Bp.desktop(context);
+        return Scaffold(
+          backgroundColor: _bg,
+          drawer: desktop
+              ? null
+              : Drawer(
+                  width: 300,
+                  child: _Sidebar(
+                    cats: _cats,
+                    counts: _counts,
+                    active: _active,
+                    query: _q,
+                    onSearch: (v) => setState(() => _q = v),
+                    onTap: (cat) => _gotoClose(cat, context),
+                    isDrawer: true,
                   ),
+                ),
+          body: Builder(
+            builder: (scaffoldCtx) => Column(
+              children: [
+                desktop
+                    ? buildHeader(currentPage: 'Products')
+                    : _MobileBar(
+                        onMenu: () => Scaffold.of(scaffoldCtx).openDrawer(),
+                      ),
 
             // Guide des sections
             _GuideStrip(
@@ -244,9 +253,11 @@ class _ProductsWebState extends State<ProductsWeb> {
                       q: _q,
                     ),
             ),
-          ],
-        ),
-      ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

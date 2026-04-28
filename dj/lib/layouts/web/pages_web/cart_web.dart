@@ -1,5 +1,7 @@
 import 'package:dj/widgets/web_header.dart';
 import 'package:flutter/material.dart';
+import 'package:dj/data/api/cart_api.dart';
+import 'package:dj/models/cart_models.dart';
 
 const Color primaryBlue = Color(0xFF1E3A8A);
 const Color lightGrey = Color(0xFFF3F4F6);
@@ -14,8 +16,14 @@ class CartWeb extends StatefulWidget {
 }
 
 class _CartWebState extends State<CartWeb> {
-  // Sample cart items - in real app, this would come from state management
-  final List<Map<String, dynamic>> cartItems = [];
+  final _cartApi = CartApi();
+  late Future<CartModel> _cartFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _cartFuture = _cartApi.getCart();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +33,24 @@ class _CartWebState extends State<CartWeb> {
         child: Column(
           children: [
             buildHeader(currentPage: 'Cart'),
-            _buildCartContent(),
+            FutureBuilder<CartModel>(
+              future: _cartFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState != ConnectionState.done) {
+                  return const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 60),
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (snapshot.hasError) {
+                  return const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 60),
+                    child: Text('Erreur de chargement panier'),
+                  );
+                }
+                return _buildCartContent(snapshot.data!);
+              },
+            ),
             _buildFooter(),
           ],
         ),
@@ -34,12 +59,12 @@ class _CartWebState extends State<CartWeb> {
   }
 
   // ================= CART CONTENT =================
-  Widget _buildCartContent() {
+  Widget _buildCartContent(CartModel cart) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 60),
-      child: cartItems.isEmpty
+      child: cart.items.isEmpty
           ? _buildEmptyCart()
-          : _buildFullCart(),
+          : _buildFullCart(cart),
     );
   }
 
@@ -91,7 +116,7 @@ class _CartWebState extends State<CartWeb> {
     );
   }
 
-  Widget _buildFullCart() {
+  Widget _buildFullCart(CartModel cart) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -117,7 +142,7 @@ class _CartWebState extends State<CartWeb> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(
-                  "${cartItems.length} articles",
+                  "${cart.items.length} articles",
                   style: const TextStyle(
                     fontSize: 16,
                     color: Colors.grey,
@@ -151,9 +176,9 @@ class _CartWebState extends State<CartWeb> {
                 const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text("Sous-total:"),
-                    Text("\$0.00"),
+                  children: [
+                    const Text("Sous-total:"),
+                    Text("\$${cart.subtotal.toStringAsFixed(2)}"),
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -167,8 +192,8 @@ class _CartWebState extends State<CartWeb> {
                 const Divider(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       "Total:",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -176,8 +201,8 @@ class _CartWebState extends State<CartWeb> {
                       ),
                     ),
                     Text(
-                      "\$0.00",
-                      style: TextStyle(
+                      "\$${cart.subtotal.toStringAsFixed(2)}",
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                         color: primaryBlue,
