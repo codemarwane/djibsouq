@@ -1,3 +1,4 @@
+# Dépendances réseau / session : dio (client HTTP), shared_preferences (tokens invité + auth).
 name: dj
 description: "A new Flutter project."
 publish_to: 'none'
