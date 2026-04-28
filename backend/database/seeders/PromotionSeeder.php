@@ -7,8 +7,16 @@ use App\Models\Product;
 use App\Models\Promotion;
 use Illuminate\Database\Seeder;
 
+
+/**
+ * Insère des promotions actives et relie catégories + un échantillon aléatoire de produits.
+ * Idempotent par titre de promotion.
+ */
 class PromotionSeeder extends Seeder
 {
+    /**
+     * @return void
+     */
     public function run(): void
     {
         $promotions = [

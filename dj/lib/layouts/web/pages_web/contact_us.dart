@@ -1,3 +1,6 @@
+/// Contact : envoi du formulaire via [ContactApi] (`POST /contact`).
+library;
+
 import 'package:flutter/material.dart';
 import 'package:dj/widgets/web_header.dart';
 import 'package:dj/data/api/contact_api.dart';

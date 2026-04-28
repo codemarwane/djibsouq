@@ -6,12 +6,18 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+/**
+ * Point d’entrée du seed : catégories, produits, promotions, puis comptes de test (client + admin).
+ * Les mots de passe sont en clair ici uniquement pour le développement local.
+ */
 class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
 
     /**
-     * Seed the application's database.
+     * Exécute les seeders enfants et crée ou met à jour les utilisateurs de démo.
+     *
+     * @return void
      */
     public function run(): void
     {

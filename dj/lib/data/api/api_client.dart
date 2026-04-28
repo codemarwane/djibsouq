@@ -1,3 +1,12 @@
+
+/// Client HTTP unique pour l’app : Dio avec timeouts, JSON, et en-têtes d’auth.
+///
+/// [String.fromEnvironment] `API_BASE_URL` surcharge l’URL par défaut (`127.0.0.1:8000/api`).
+/// Chaque requête ajoute `Authorization: Bearer …` si un token est enregistré, et
+/// `X-Guest-Token` pour le panier / favoris invité.
+library;
+
+
 import 'package:dio/dio.dart';
 import 'package:dj/data/api/api_exception.dart';
 import 'package:dj/data/api/auth_store.dart';
@@ -14,6 +23,9 @@ class ApiClient {
         headers: {'Accept': 'application/json'},
       ),
     );
+
+
+    // Injection session utilisateur + invité avant chaque appel réseau.
 
     _dio.interceptors.add(
       InterceptorsWrapper(

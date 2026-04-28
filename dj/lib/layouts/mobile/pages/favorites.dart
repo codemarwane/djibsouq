@@ -1,3 +1,6 @@
+/// Favoris mobile : [WishlistApi] (session alignée sur le panier invité si besoin).
+library;
+
 import 'package:flutter/material.dart';
 import 'package:dj/data/api/wishlist_api.dart';
 import 'package:dj/models/product_models.dart';

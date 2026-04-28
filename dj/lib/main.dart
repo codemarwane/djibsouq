@@ -1,3 +1,6 @@
+/// Point d’entrée : initialise le stockage session / invité et précharge le catalogue avant [runApp].
+library;
+
 import 'package:dj/demarrage_screen.dart';
 import 'package:dj/data/api/auth_store.dart';
 import 'package:dj/data/api/guest_token_store.dart';

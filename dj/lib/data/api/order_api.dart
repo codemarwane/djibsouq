@@ -1,3 +1,7 @@
+
+/// Commandes : liste, détail, création avec `address_id` et options de paiement / notes.
+library;
+
 import 'package:dj/data/api/api_client.dart';
 
 class OrderApi {

@@ -1,3 +1,6 @@
+/// Liste produits pour un nom de catégorie (filtre sur le cache [ProductRepository]).
+library;
+
 import 'package:dj/data/product_repository.dart';
 import 'package:flutter/material.dart';
 

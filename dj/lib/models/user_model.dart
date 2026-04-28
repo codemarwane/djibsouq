@@ -1,3 +1,5 @@
+
+/// Utilisateur connecté (profil `/user` et réponses auth).
 class UserModel {
   UserModel({
     required this.id,

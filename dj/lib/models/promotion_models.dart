@@ -1,3 +1,4 @@
+/// Bannière / offre promotionnelle (pourcentage ou montant fixe selon [discountType]).
 class PromotionModel {
   final int id;
   final String title;

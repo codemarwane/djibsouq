@@ -1,3 +1,6 @@
+/// Page d’accueil web : catalogue [ProductRepository], filtres, mise en page responsive.
+library;
+
 import 'dart:async';
 import 'package:dj/layouts/web/pages_web/categories_web.dart';
 import 'package:dj/models/category_models.dart';

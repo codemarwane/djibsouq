@@ -1,3 +1,7 @@
+
+/// Formulaire contact : POST `/contact` (nom, email, sujet, message).
+library;
+
 import 'package:dj/data/api/api_client.dart';
 
 class ContactApi {

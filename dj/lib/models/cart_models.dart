@@ -1,3 +1,7 @@
+
+/// Modèles du panier API : ligne avec produit embarqué et totaux du panier.
+library;
+
 import 'package:dj/models/product_models.dart';
 
 class CartItemModel {

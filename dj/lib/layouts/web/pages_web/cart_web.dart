@@ -1,3 +1,6 @@
+/// Panier web : [CartApi] + en-tête / pied de page communs.
+library;
+
 import 'package:dj/widgets/web_header.dart';
 import 'package:flutter/material.dart';
 import 'package:dj/data/api/cart_api.dart';

@@ -1,3 +1,6 @@
+/// Profil connecté : chargement et mise à jour via [AuthApi] (`/user`).
+library;
+
 import 'package:flutter/material.dart';
 import 'package:dj/widgets/web_header.dart';
 import 'package:dj/routes.dart';

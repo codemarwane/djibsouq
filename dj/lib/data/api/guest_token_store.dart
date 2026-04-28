@@ -1,3 +1,7 @@
+
+/// Stocke le jeton invité renvoyé par le backend pour fusionner panier / wishlist sans compte.
+library;
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class GuestTokenStore {

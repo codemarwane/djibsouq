@@ -1,3 +1,7 @@
+
+/// Liste de souhaits : GET/POST `/wishlist`, DELETE `/wishlist/:id` (même session invité que le panier).
+library;
+
 import 'package:dj/data/api/api_client.dart';
 import 'package:dj/models/product_models.dart';
 

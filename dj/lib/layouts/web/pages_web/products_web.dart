@@ -1,3 +1,6 @@
+/// Catalogue web produits : [ProductRepository], grille responsive et fiches détail.
+library;
+
 import 'package:flutter/material.dart';
 import 'package:dj/data/product_repository.dart';
 import 'package:dj/models/product_models.dart';

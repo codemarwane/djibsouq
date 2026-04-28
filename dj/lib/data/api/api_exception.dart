@@ -1,3 +1,8 @@
+
+/// Erreur métier ou HTTP renvoyée par l’API Laravel (message + erreurs de validation).
+///
+/// Construite à partir du corps JSON des réponses d’erreur (`message`, `errors`).
+
 class ApiException implements Exception {
   ApiException({
     required this.statusCode,

@@ -1,3 +1,6 @@
+/// Accueil mobile : attend le [ProductRepository], bannières, catégories et listes par rayon.
+library;
+
 import 'package:dj/models/category_models.dart';
 import 'package:dj/data/product_repository.dart';
 import 'package:dj/widgets/products_horizontal_list.dart';

@@ -1,3 +1,7 @@
+
+/// Catalogue public : catégories, liste / détail produits, promotions (pagination via `per_page`).
+library;
+
 import 'package:dj/data/api/api_client.dart';
 import 'package:dj/models/category_models.dart';
 import 'package:dj/models/product_models.dart';

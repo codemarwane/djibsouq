@@ -1,3 +1,6 @@
+/// Catégorie affichée dans l’app, alignée sur le JSON API (`imageUrl`, `icon`, couleur hex).
+library;
+
 import 'package:flutter/material.dart';
 
 class Category {

@@ -1,3 +1,7 @@
+
+/// Panier : `/cart` et `/cart/items`. Persiste le `guestToken` renvoyé quand l’utilisateur est invité.
+library;
+
 import 'package:dj/data/api/api_client.dart';
 import 'package:dj/data/api/guest_token_store.dart';
 import 'package:dj/models/cart_models.dart';

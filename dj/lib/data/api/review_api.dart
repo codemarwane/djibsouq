@@ -1,3 +1,7 @@
+
+/// Avis produits : liste par produit et création d’un avis (note + commentaire).
+library;
+
 import 'package:dj/data/api/api_client.dart';
 
 class ReviewApi {

@@ -1,3 +1,7 @@
+
+/// Adresses de livraison utilisateur : CRUD sur `/addresses`.
+library;
+
 import 'package:dj/data/api/api_client.dart';
 
 class AddressApi {

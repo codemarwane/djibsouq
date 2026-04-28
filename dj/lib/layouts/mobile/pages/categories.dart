@@ -1,3 +1,5 @@
+/// Grille des catégories : contenu issu de [ProductRepository] (API déjà chargée au démarrage ou ici).
+library;
 
 import 'package:flutter/material.dart';
 import 'package:dj/data/product_repository.dart';

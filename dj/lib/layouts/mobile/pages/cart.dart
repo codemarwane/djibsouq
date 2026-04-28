@@ -1,3 +1,6 @@
+/// Panier mobile : données live via [CartApi] (invité ou connecté, jeton invité géré côté client).
+library;
+
 import 'package:flutter/material.dart';
 import 'package:dj/data/api/cart_api.dart';
 import 'package:dj/models/cart_models.dart';

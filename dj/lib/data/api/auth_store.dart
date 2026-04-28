@@ -1,3 +1,7 @@
+
+/// Persistance locale du jeton Sanctum et du rôle utilisateur après login / register.
+library;
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthStore {

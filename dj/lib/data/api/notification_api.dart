@@ -1,3 +1,7 @@
+
+/// Notifications in-app : liste et marquage lu (tout ou une notification).
+library;
+
 import 'package:dj/data/api/api_client.dart';
 
 class NotificationApi {

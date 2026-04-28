@@ -7,8 +7,16 @@ use App\Models\Product;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
+/**
+ * Crée des produits de démo par catégorie (slug attendu : electronique, vetements, maison, sports).
+ * SKU et slug dérivés du titre ; ignore une catégorie absente. Idempotent par slug produit.
+ */
 class ProductSeeder extends Seeder
 {
+    /**
+     * @return void
+     */
+
     public function run(): void
     {
         $productsByCategory = [

@@ -1,3 +1,7 @@
+
+/// Vue promos / offres : produits filtrés depuis [ProductRepository] après init.
+library;
+
 import 'package:flutter/material.dart';
 import 'package:dj/widgets/web_header.dart'; // Assure-toi que c'est bien BuildHeader ou ton nom actuel
 import 'package:dj/data/product_repository.dart';

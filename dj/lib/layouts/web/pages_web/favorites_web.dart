@@ -1,3 +1,6 @@
+/// Favoris web : [WishlistApi] et navigation vers le catalogue.
+library;
+
 import 'package:dj/layouts/web/pages_web/products_web.dart';
 import 'package:dj/widgets/web_header.dart';
 import 'package:flutter/material.dart';

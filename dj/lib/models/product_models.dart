@@ -1,3 +1,4 @@
+/// Produit catalogue avec champs UI (prix, images, catégorie, avis, promos).
 class Product {
   final int id;
   final String title;

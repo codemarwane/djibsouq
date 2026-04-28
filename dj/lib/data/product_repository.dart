@@ -1,3 +1,10 @@
+
+/// Cache en mémoire du catalogue chargé au démarrage via [CatalogApi] pour l’UI (home, listes, filtres).
+///
+/// Les listes sont remplies une fois par [initialize] ; [refreshAll] force un nouveau chargement réseau.
+library;
+
+
 import 'package:dj/models/product_models.dart';
 import 'package:dj/models/category_models.dart';
 import 'package:dj/models/promotion_models.dart';

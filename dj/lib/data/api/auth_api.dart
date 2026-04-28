@@ -1,3 +1,9 @@
+
+/// Appels REST d’authentification et profil : `/auth/*`, `/user` (GET/PUT).
+///
+/// Envoie optionnellement `guest_token` à l’inscription / login pour fusion avec la session invitée.
+library;
+
 import 'package:dj/data/api/api_client.dart';
 import 'package:dj/data/api/auth_store.dart';
 import 'package:dj/models/user_model.dart';
